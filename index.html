@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Bank Management System - Database Viewer</title>
+
+<!-- CSS -->
+
+<link rel="stylesheet" href="styles.css">
+
+<!-- Tailwind (optional) -->
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Database -->
+
+<script src="database.js"></script>
+
+<!-- Queries -->
+
+<script src="queries.js"></script>
+
+<!-- Main App -->
+
+<script src="app.js" defer></script>
+
+</head>
+
+<body>
+
+<div class="app-wrapper">
+
+<header>
+<h1>🏦 Bank Management System</h1>
+<p>Interactive Database Viewer</p>
+</header>
+
+<div class="main-content">
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+<div class="sidebar-header">
+📊 TABLES
+</div>
+
+<div class="sidebar-item active" onclick="switchTable('dashboard',event)">
+Dashboard
+</div>
+
+<div class="sidebar-item" onclick="switchTable('branch',event)">
+🏢 Branch
+</div>
+
+<div class="sidebar-item" onclick="switchTable('department',event)">
+🏷️ Department
+</div>
+
+<div class="sidebar-item" onclick="switchTable('employee',event)">
+👤 Employee
+</div>
+
+<div class="sidebar-item" onclick="switchTable('customer',event)">
+👥 Customer
+</div>
+
+<div class="sidebar-item" onclick="switchTable('account',event)">
+💳 Account
+</div>
+
+<div class="sidebar-item" onclick="switchTable('card',event)">
+🎫 Card
+</div>
+
+<div class="sidebar-item" onclick="switchTable('transaction',event)">
+💰 Transaction
+</div>
+
+<div class="sidebar-item" onclick="switchTable('loan',event)">
+📋 Loan
+</div>
+
+<div class="sidebar-item" onclick="switchTable('analytics',event)">
+📈 Advanced Analytics
+</div>
+
+</div>
+
+<!-- CONTENT AREA -->
+
+<div class="content-area">
+
+<div class="view-area">
+
+<!-- DASHBOARD -->
+
+<div id="dashboard" class="view-section active">
+
+<h2 class="section-title">📊 Database Overview</h2>
+
+<div class="stat-grid">
+
+<div class="stat-card">
+<div class="stat-label">Total Customers</div>
+<div class="stat-number" id="statCustomers">0</div>
+</div>
+
+<div class="stat-card">
+<div class="stat-label">Total Accounts</div>
+<div class="stat-number" id="statAccounts">0</div>
+</div>
+
+<div class="stat-card">
+<div class="stat-label">Total Branches</div>
+<div class="stat-number" id="statBranches">0</div>
+</div>
+
+<div class="stat-card">
+<div class="stat-label">Active Cards</div>
+<div class="stat-number" id="statCards">0</div>
+</div>
+
+<div class="stat-card">
+<div class="stat-label">Active Loans</div>
+<div class="stat-number" id="statLoans">0</div>
+</div>
+
+<div class="stat-card">
+<div class="stat-label">Total Transactions</div>
+<div class="stat-number" id="statTransactions">0</div>
+</div>
+
+</div>
+
+<div class="table-container">
+
+<div class="table-header">
+💰 Recent Transactions
+</div>
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+<th>Date</th>
+<th>Account</th>
+<th>Type</th>
+<th>Amount</th>
+<th>Reference</th>
+</tr>
+
+</thead>
+
+<tbody id="recentTransactions"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- BRANCH TABLE -->
+
+<div id="branch" class="view-section">
+
+<h2 class="section-title">🏢 Branch Details</h2>
+
+<div class="table-container">
+
+<div class="table-header">
+All Branches
+</div>
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+<th>Branch ID</th>
+<th>Name</th>
+<th>Code</th>
+<th>City</th>
+<th>State</th>
+<th>Phone</th>
+<th>Status</th>
+</tr>
+
+</thead>
+
+<tbody id="branchTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- DEPARTMENT -->
+
+<div id="department" class="view-section">
+
+<h2 class="section-title">🏷️ Department Details</h2>
+
+<div class="table-container">
+
+<div class="table-header">
+All Departments
+</div>
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+<th>Department ID</th>
+<th>Name</th>
+<th>Description</th>
+</tr>
+
+</thead>
+
+<tbody id="departmentTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- EMPLOYEE -->
+
+<div id="employee" class="view-section">
+
+<h2 class="section-title">👤 Employee Details</h2>
+
+<div class="table-container">
+
+<div class="table-header">
+All Employees
+</div>
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+<th>Employee ID</th>
+<th>Name</th>
+<th>Code</th>
+<th>Email</th>
+<th>Designation</th>
+<th>Department</th>
+<th>Salary</th>
+<th>Status</th>
+</tr>
+
+</thead>
+
+<tbody id="employeeTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- CUSTOMER -->
+
+<div id="customer" class="view-section">
+
+<h2 class="section-title">👥 Customer Details</h2>
+
+<div class="table-container">
+
+<div class="table-header">
+All Customers
+</div>
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+<th>Customer ID</th>
+<th>Name</th>
+<th>Email</th>
+<th>Phone</th>
+<th>City</th>
+<th>Status</th>
+</tr>
+
+</thead>
+
+<tbody id="customerTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ACCOUNT -->
+
+<div id="account" class="view-section">
+
+<h2 class="section-title">💳 Account Details</h2>
+
+<div class="table-container">
+
+<div class="table-header">
+All Accounts
+</div>
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+<th>Account ID</th>
+<th>Account Number</th>
+<th>Customer</th>
+<th>Type</th>
+<th>Balance</th>
+<th>Interest Rate</th>
+<th>Status</th>
+</tr>
+
+</thead>
+
+<tbody id="accountTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- CARD -->
+
+<div id="card" class="view-section">
+
+<h2 class="section-title">🎫 Card Details</h2>
+
+<div class="table-container">
+
+<div class="table-header">
+All Cards
+</div>
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+<th>Card ID</th>
+<th>Card Number</th>
+<th>Type</th>
+<th>Cardholder</th>
+<th>Expiry</th>
+<th>Limit</th>
+<th>Status</th>
+</tr>
+
+</thead>
+
+<tbody id="cardTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- TRANSACTION -->
+
+<div id="transaction" class="view-section">
+
+<h2 class="section-title">💰 Transaction Details</h2>
+
+<div class="table-container">
+
+<div class="table-header">
+All Transactions
+</div>
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+<th>Transaction ID</th>
+<th>Account</th>
+<th>Type</th>
+<th>Amount</th>
+<th>Date</th>
+<th>Reference</th>
+</tr>
+
+</thead>
+
+<tbody id="transactionTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- LOAN -->
+
+<div id="loan" class="view-section">
+
+<h2 class="section-title">📋 Loan Details</h2>
+
+<div class="table-container">
+
+<div class="table-header">
+All Loans
+</div>
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+<th>Loan ID</th>
+<th>Loan Number</th>
+<th>Customer</th>
+<th>Type</th>
+<th>Principal</th>
+<th>Balance</th>
+<th>Status</th>
+</tr>
+
+</thead>
+
+<tbody id="loanTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ANALYTICS -->
+
+<div id="queries" class="view-section">
+
+<h2 class="section-title">📈 Advanced Analytics</h2>
+
+<div class="query-controls">
+
+<input type="text" id="querySearch" placeholder="Search queries...">
+
+</div>
+
+<div class="analytics-layout">
+
+<div id="queryList"></div>
+
+<div id="queryResults">
+
+<div class="empty-state">
+Select a query to view results
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>
